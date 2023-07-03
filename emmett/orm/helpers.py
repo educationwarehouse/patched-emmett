@@ -117,7 +117,11 @@ class RowReferenceMixin:
 
 class RowReferenceInt(RowReferenceMixin, int):
     def __new__(cls, id, table: Table, *args: Any, **kwargs: Any):
-        rv = super().__new__(cls, id, *args, **kwargs)
+        try:
+            rv = super().__new__(cls, id, *args, **kwargs)
+        except ValueError:
+            rv = super().__new__(cls, None, *args, **kwargs)
+
         int.__setattr__(rv, '_refmeta', RowReferenceMeta(table, int))
         int.__setattr__(rv, '_refrecord', None)
         return rv
