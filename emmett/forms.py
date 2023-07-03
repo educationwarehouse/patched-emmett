@@ -450,9 +450,9 @@ class FormStyle:
         return validator.options(), validator.multiple
 
     @staticmethod
-    def widget_string(attr, field, value, _class="string", _id=None):
+    def widget_string(attr, field, value, _class="string", _id=None, _type=None):
         return tag.input(
-            _type="text",
+            _type=_type or "text",
             _name=field.name,
             _value=value if value is not None else "",
             _class=_class,
