@@ -656,6 +656,7 @@ class FormStyle:
                widget = getattr(self, f"widget_{wtype}")(
                     self.attr, field, value, _id=widget_id
                 )
+            raise RuntimeError("test als widget hier kan komen")
             if not field.writable:
                 self._disable_widget(widget)
             return widget, False
