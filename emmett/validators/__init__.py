@@ -201,25 +201,25 @@ class ValidateFromDict(object):
                 _dbset = _in.get('dbset')
                 if callable(_dbset):
                     ref_table, ref_field, multiple = self.parse_reference(field)
-                    if ref_table:
-                        opt_keys = [key for key in list(_in) if key != 'dbset']
-                        for key in opt_keys:
-                            options[key] = _in[key]
-                        validators.append(
-                            inDB(
-                                field.db,
-                                ref_table,
-                                ref_field,
-                                dbset=_dbset,
-                                multiple=multiple,
-                                message=message,
-                                **options
-                            )
+                    # if ref_table:
+                    opt_keys = [key for key in list(_in) if key != 'dbset']
+                    for key in opt_keys:
+                        options[key] = _in[key]
+                    validators.append(
+                        inDB(
+                            field.db,
+                            ref_table,
+                            ref_field,
+                            dbset=_dbset,
+                            multiple=multiple,
+                            message=message,
+                            **options
                         )
-                    else:
-                        raise SyntaxError(
-                            "'in:dbset' validator needs a reference field"
-                        )
+                    )
+                    # else:
+                    #     raise SyntaxError(
+                    #         "'in:dbset' validator needs a reference field"
+                    #     )
             else:
                 raise SyntaxError(
                     "'in' validator accepts only a set or a dict"

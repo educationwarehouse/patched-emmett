@@ -120,7 +120,6 @@ class RowReferenceInt(RowReferenceMixin, int):
         try:
             rv = super().__new__(cls, id, *args, **kwargs)
         except ValueError:
-            # rv = super().__new__(cls, None, *args, **kwargs)
             return None
         int.__setattr__(rv, '_refmeta', RowReferenceMeta(table, int))
         int.__setattr__(rv, '_refrecord', None)
