@@ -649,25 +649,20 @@ class FormStyle:
             wtype = "int"
         elif wtype.startswith("decimal"):
             wtype = "float"
-        # try:
-        widget = getattr(self, f"widget_{wtype}")(
-            self.attr, field, value, _id=widget_id
-        )
-
-        if not field.writable:
-            self._disable_widget(widget)
-        return widget, False
-        # except AttributeError as e:
-        #     raise RuntimeError(
-        #         f"Missing form widget for field {field.name} of type {wtype}"
-        #     ) from e
+        try:
+            widget = getattr(self, "widget_" + wtype)(
+                self.attr, field, value, _id=widget_id
+            )
+            if not field.writable:
+                self._disable_widget(widget)
+            return widget, False
+        except AttributeError:
+            raise RuntimeError(
+                f"Missing form widget for field {field.name} of type {wtype}"
+            )
 
     def _disable_widget(self, widget):
-        try:
-            widget.attributes["_disabled"] = "disabled"
-        except AttributeError:
-            widget.attributes = {"_disabled": "disabled"}
-
+        widget.attributes["_disabled"] = "disabled"
 
     def _proc_element(self, field, value, error):
         widget, wfield = self._get_widget(field, value)
