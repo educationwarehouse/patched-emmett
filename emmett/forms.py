@@ -659,10 +659,10 @@ class FormStyle:
             if not field.writable:
                 self._disable_widget(widget)
             return widget, False
-        except AttributeError:
+        except AttributeError as e:
             raise RuntimeError(
                 f"Missing form widget for field {field.name} of type {wtype}"
-            )
+            ) from e
 
     def _disable_widget(self, widget):
         if "attributes" in dir(widget):
