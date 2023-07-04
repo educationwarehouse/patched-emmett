@@ -650,12 +650,10 @@ class FormStyle:
         elif wtype.startswith("decimal"):
             wtype = "float"
         try:
-            if f"{wtype}" == "select":
-                widget = self.widget_select(None, field, value, _id=widget_id)
-            else:
-               widget = getattr(self, f"widget_{wtype}")(
-                    self.attr, field, value, _id=widget_id
-                )
+            widget = getattr(self, f"widget_{wtype}")(
+                self.attr, field, value, _id=widget_id
+            )
+
             if not field.writable:
                 self._disable_widget(widget)
             return widget, False
@@ -665,9 +663,9 @@ class FormStyle:
             ) from e
 
     def _disable_widget(self, widget):
-        if "attributes" in dir(widget):
+        try:
             widget.attributes["_disabled"] = "disabled"
-        else:
+        except AttributeError:
             widget.attributes = {"_disabled": "disabled"}
 
 
