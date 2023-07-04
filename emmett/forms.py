@@ -651,6 +651,7 @@ class FormStyle:
             wtype = "float"
         try:
             if f"{wtype}" == "select":
+                raise Exception("HOE")
                 widget = self.widget_select(self.attr, field, value, _id=widget_id)
             else:
                widget = getattr(self, f"widget_{wtype}")(
