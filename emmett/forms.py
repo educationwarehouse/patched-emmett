@@ -665,7 +665,11 @@ class FormStyle:
             )
 
     def _disable_widget(self, widget):
-        widget.attributes["_disabled"] = "disabled"
+        if "attributes" in dir(widget):
+            widget.attributes["_disabled"] = "disabled"
+        else:
+            widget.attributes = {"_disabled": "disabled"}
+
 
     def _proc_element(self, field, value, error):
         widget, wfield = self._get_widget(field, value)
