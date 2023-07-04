@@ -651,10 +651,11 @@ class FormStyle:
             wtype = "float"
         try:
             if f"widget_{wtype}" == "widget_select":
-                self.widget_select(self.attr, field, value, _id=widget_id)
-            widget = getattr(self, f"widget_{wtype}")(
-                self.attr, field, value, _id=widget_id
-            )
+                widget = self.widget_select(self.attr, field, value, _id=widget_id)
+            else:
+                widget = getattr(self, f"widget_{wtype}")(
+                    self.attr, field, value, _id=widget_id
+                )
             if not field.writable:
                 self._disable_widget(widget)
             return widget, False
