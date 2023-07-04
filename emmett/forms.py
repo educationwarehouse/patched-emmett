@@ -650,7 +650,9 @@ class FormStyle:
         elif wtype.startswith("decimal"):
             wtype = "float"
         try:
-            widget = getattr(self, "widget_" + wtype)(
+            if f"widget_{wtype}" == "widget_select":
+                self.widget_select(self.attr, field, value, _id=widget_id)
+            widget = getattr(self, f"widget_{wtype}")(
                 self.attr, field, value, _id=widget_id
             )
             if not field.writable:

@@ -276,26 +276,28 @@ class Field(_Field):
             rv['is'] = 'decimal'
         elif self._type == 'jsonb':
             rv['is'] = 'json'
-        if self._type == 'bigint':
+        elif self._type == 'bigint':
             rv['is'] = 'int'
-        if self._type == 'bool':
+        elif self._type == 'bool':
             rv['in'] = (False, True)
-        if self._type in ['string', 'text', 'password']:
+        elif self._type in ['string', 'text', 'password']:
             rv['len'] = {'lte': self.length}
-        if self._type == 'password':
+        elif self._type == 'password':
             rv['len']['gte'] = 6
             rv['crypt'] = True
-        if self._type == 'list:int':
+        elif self._type == 'list:int':
             rv['is'] = 'list:int'
-        if (
+        elif (
             self.notnull or self._type.startswith('reference') or
             self._type.startswith('list:reference')
         ):
             rv['presence'] = True
-        if not self.notnull and self._isrefers is True:
+        elif not self.notnull and self._isrefers is True:
             rv['allow'] = 'empty'
-        if self.unique:
+        elif self.unique:
             rv['unique'] = True
+        # else:
+
         return rv
 
     def _parse_validation(self):
