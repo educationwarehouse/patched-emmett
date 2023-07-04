@@ -649,18 +649,18 @@ class FormStyle:
             wtype = "int"
         elif wtype.startswith("decimal"):
             wtype = "float"
-        try:
-            widget = getattr(self, f"widget_{wtype}")(
-                self.attr, field, value, _id=widget_id
-            )
+        # try:
+        widget = getattr(self, f"widget_{wtype}")(
+            self.attr, field, value, _id=widget_id
+        )
 
-            if not field.writable:
-                self._disable_widget(widget)
-            return widget, False
-        except AttributeError as e:
-            raise RuntimeError(
-                f"Missing form widget for field {field.name} of type {wtype}"
-            ) from e
+        if not field.writable:
+            self._disable_widget(widget)
+        return widget, False
+        # except AttributeError as e:
+        #     raise RuntimeError(
+        #         f"Missing form widget for field {field.name} of type {wtype}"
+        #     ) from e
 
     def _disable_widget(self, widget):
         try:
