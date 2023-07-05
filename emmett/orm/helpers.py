@@ -148,7 +148,7 @@ class RowReferenceList(RowReferenceMixin, tuple):
         # TODO: betere pointer, checken als het een string is?
         tupid = tuple([_id for _id in id])
         rv = super().__new__(cls, tupid, *args, **kwargs)
-        tuple.__setattr__(rv, '_refmeta', RowReferenceMultiMeta(table))
+        tuple.__setattr__(rv, '_refmeta', RowReferenceMeta(table, int))
         tuple.__setattr__(rv, '_refrecord', None)
         return rv
 
