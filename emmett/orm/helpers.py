@@ -555,6 +555,9 @@ def wrap_virtual_on_model(model, virtual):
 
 def typed_row_reference(id: Any, table: Table):
     field_type = table._id.type if table._id else None
+    if field_type == 'id' and type(id) == list:
+        return RowReferenceMulti(id, table)
+
     return {
         'id': RowReferenceInt,
         'integer': RowReferenceInt,
