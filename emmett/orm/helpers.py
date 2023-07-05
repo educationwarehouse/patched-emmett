@@ -142,16 +142,6 @@ class RowReferenceMulti(RowReferenceMixin, tuple):
         tuple.__setattr__(rv, '_refrecord', None)
         return rv
 
-
-class RowReferenceList(RowReferenceMixin, tuple):
-    def __new__(cls, id, table: Table, *args: Any, **kwargs: Any):
-        # TODO: betere pointer, checken als het een string is?
-        tupid = tuple([_id for _id in id])
-        rv = super().__new__(cls, tupid, *args, **kwargs)
-        tuple.__setattr__(rv, '_refmeta', RowReferenceMeta(table, int))
-        tuple.__setattr__(rv, '_refrecord', None)
-        return rv
-
     def __getattr__(self, key: str) -> Any:
         if key in self._refmeta.pks:
             return self._refmeta.casters[key](
@@ -565,9 +555,6 @@ def wrap_virtual_on_model(model, virtual):
 
 def typed_row_reference(id: Any, table: Table):
     field_type = table._id.type if table._id else None
-    if field_type == 'id' and type(id) == list:
-        return RowReferenceList(id, table)
-
     return {
         'id': RowReferenceInt,
         'integer': RowReferenceInt,
