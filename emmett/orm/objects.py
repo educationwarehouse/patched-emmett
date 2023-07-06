@@ -413,10 +413,6 @@ class Field(_Field):
         return cls('list:string', *args, **kwargs)
 
     @classmethod
-    def reference_list(cls, reference_to, *args, **kwargs):
-        return cls(f'list:reference {reference_to}', *args, **kwargs)
-
-    @classmethod
     def geography(
         cls,
         geometry_type: str = 'GEOMETRY',

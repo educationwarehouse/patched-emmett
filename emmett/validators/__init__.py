@@ -136,7 +136,6 @@ class ValidateFromDict(object):
             ref_table = field.type.split(' ')[1]
             model = field.table._model_
             #: can't support (yet?) multi pks
-            raise Exception(f"{model._belongs_ref_}")
             if model._belongs_ref_[field.name].compound:
                 ref_table = None
             else:
@@ -202,9 +201,6 @@ class ValidateFromDict(object):
                 _dbset = _in.get('dbset')
                 if callable(_dbset):
                     ref_table, ref_field, multiple = self.parse_reference(field)
-                    # allows {'in': {'dbset': lambda db: db.where(query)
-                    #         'multiple': True}}
-                    multiple = data.get("multiple", multiple)
                     if ref_table:
                         opt_keys = [key for key in list(_in) if key != 'dbset']
                         for key in opt_keys:
