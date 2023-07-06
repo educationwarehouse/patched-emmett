@@ -136,6 +136,7 @@ class ValidateFromDict(object):
             ref_table = field.type.split(' ')[1]
             model = field.table._model_
             #: can't support (yet?) multi pks
+            raise Exception(f"{model._belongs_ref_}")
             if model._belongs_ref_[field.name].compound:
                 ref_table = None
             else:
