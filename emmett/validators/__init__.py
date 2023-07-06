@@ -201,6 +201,7 @@ class ValidateFromDict(object):
                 _dbset = _in.get('dbset')
                 if callable(_dbset):
                     ref_table, ref_field, multiple = self.parse_reference(field)
+                    ref_table = _in.get('ref_table')
                     if ref_table:
                         opt_keys = [key for key in list(_in) if key != 'dbset']
                         for key in opt_keys:
