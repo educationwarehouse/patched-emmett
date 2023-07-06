@@ -201,6 +201,9 @@ class ValidateFromDict(object):
                 _dbset = _in.get('dbset')
                 if callable(_dbset):
                     ref_table, ref_field, multiple = self.parse_reference(field)
+                    # allows {'in': {'dbset': lambda db: db.where(query)
+                    #         'multiple': True}}
+                    multiple = data.get("multiple", multiple)
                     if ref_table:
                         opt_keys = [key for key in list(_in) if key != 'dbset']
                         for key in opt_keys:
